@@ -1,6 +1,6 @@
 import RPi.GPIO as GPIO
 import time
-import threading 
+import multiprocessing
 import os
 
 print 'distance measurement in progress'
@@ -47,12 +47,13 @@ def mysensor(senname,TRIG,ECHO) :
 			
 		
         print 'distance', senname,':', distance,'cm'
+if __name__ == '__main__':
+    jobs = []
+    work1 = multiprocessing.Process(target=mysensor, args(1,TRIG1,ECHO1,))
+    work2 = multiprocessing.Process(target=mysensor, args(1,TRIG2,ECHO2,))
+    while 1 :
+        work1.start()
+	work2.start()
 
-while 1 :        
-    	
-    mysensor(1,TRIG1, ECHO1)
-    mysensor(2,TRIG2, ECHO2)
-    
-	
 GPIO.cleanup()
 
